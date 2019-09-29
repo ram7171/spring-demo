@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<context:property-placeholder location="classpath:demo.properties"/>
+	
+	<bean id="myLoggerConfig" class="com.osquretech.spring.demo.logger.LoggerConfig" init-method="initLogger">
+    	<property name="rootLoggerLevel" value="FINE" />
+    	<property name="printedLoggerLevel" value="FINE"/>
+    </bean>
+	
+	<bean id="myCoach"
+		class="com.osquretech.spring.demo.depencyinjection.xmldemo.BaseballCoach">
+	</bean>
+	
+	<bean id="cricketCoach"
+		class="com.osquretech.spring.demo.depencyinjection.xmldemo.CricketCoach">
+	</bean>
+
+	<bean id="fortuneService"
+		class="com.osquretech.spring.demo.service.impl.RandomFurtunate"></bean>
+	
+	<bean id="golfCoach"
+		class="com.osquretech.spring.demo.depencyinjection.xmldemo.GoafCoach">
+		<constructor-arg ref="fortuneService"/>
+	</bean>
+	
+	<bean id="golfCoachProtoType"
+		class="com.osquretech.spring.demo.depencyinjection.xmldemo.GoafCoach"
+		scope="prototype">
+		<constructor-arg ref="fortuneService"/>
+	</bean>
+	
+	<bean id="volleyBallCoach"
+		class="com.osquretech.spring.demo.depencyinjection.xmldemo.VolleyballCoach">
+		<property name="practiceWorkout" value="This is example of Volley Ball coach"/>
+		<property name="todayFortune" value="today is lucky day for volleyball"/>
+		<property name="prob1" value="${demo.prop1}"/>
+		<property name="team" value="${demo.team}"/>
+	</bean>
+</beans>
